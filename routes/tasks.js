@@ -52,4 +52,19 @@ router.put('/task/:id',async (req , res)=>{
     
 })
 
+router.delete('/task/:id',async (req , res)=>{
+        await Task.findByIdAndDelete(req.params.id,(err)=>{
+            if(err){
+                console.log(err)
+                return res.status(400).json({error:"Someting went wrong while deleting the task"})
+            }
+         
+            res.status(200).json({message:"task Deleted Sucessfully"});
+              
+          
+        });
+
+    
+})
+
 module.exports = router;
