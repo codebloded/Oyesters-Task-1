@@ -13,7 +13,7 @@ const MONGO_URI = 'mongodb://localhost:27017/oyester';
 
 //Connceting the database with the server i.e 'mongodb'
 mongoose.Promise = global.Promise;
-mongoose.connect(MONGO_URI , ({useUnifiedTopology:true ,useNewUrlParser:true}),()=>{
+mongoose.connect(MONGO_URI , ({useUnifiedTopology:true ,useNewUrlParser:true, useFindAndModify:false }),()=>{
     console.log("connected to mongodb");
 })
 

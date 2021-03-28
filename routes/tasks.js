@@ -4,8 +4,15 @@ const Task = require('../model/Task');
 
 const router = express.Router();
 
-router.get('/task',(req, res)=>{
-    res.json("GET ON TASK")
+router.get('/task', async (req, res)=>{
+    const tasks = await Task.find({});
+
+    try {
+        res.json(tasks)
+
+    } catch (error) {
+        res.json({err:error})
+    }
 });
 
 router.post('/task', (req, res)=>{
@@ -27,5 +34,22 @@ router.post('/task', (req, res)=>{
     }
         
 });
+
+router.put('/task/:id',async (req , res)=>{
+    req.header("Content-Type" ,"application/json");
+  
+        await Task.findByIdAndUpdate(req.body.id, req.body , {new:true}, (err)=>{
+            if(err){
+                console.log(err)
+                return res.status(400).json({error:"Someting went wrong while updating the task"})
+            }
+         
+            res.status(200).json({message:"task upadated Sucessfully"});
+              
+          
+        });
+
+    
+})
 
 module.exports = router;
