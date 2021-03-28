@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const HOST = 'localhost';
 const PORT = "5000";
 const auth = require('./routes/auth');
+const task = require('./routes/tasks');
 
 //Initailizing the app 
 const app = express();
@@ -17,7 +18,8 @@ mongoose.connect(MONGO_URI , ({useUnifiedTopology:true ,useNewUrlParser:true}),(
 })
 
 
-app.use(auth)
+app.use(auth);
+app.use(task);
 
 
 app.listen(PORT, ()=>{
