@@ -3,16 +3,21 @@ const router = express.Router();
 const JWT = require('jsonwebtoken')
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
+const path = require('path')
 require('dotenv').config()
 
 
 
-router.get('/', (req, res)=>{
-    res.send("Login page")
-})
+// router.get('/', (req, res)=>{
+//     res.send("Login page")
+// })
 
 // =========================REGISTERATION-ROUTE===========================================
 
+router.get('/login', (req, res)=>{
+    req.header("Content-Type", "application/json")
+    res.sendFile(path.join(__dirname + '/login.html'));
+})
 
 router.post('/register', async(req, res)=>{
     req.header("Content-Type", "application/json");
@@ -33,6 +38,7 @@ router.post('/register', async(req, res)=>{
         })
         
         user.save().then(user=>{
+            res.redirect('/login')
                 res.status(200).json({message:'Sucessfully saved'});
             }).catch(err=>{
                 res.json({error:err});
