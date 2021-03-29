@@ -6,6 +6,8 @@ const PORT = "5000";
 const auth = require('./routes/auth');
 const task = require('./routes/tasks');
 const  bodyParser = require('body-parser')
+const Handlebars = require('handlebars');
+const expressHandlebars = require('express-handlebars');
 
 //Initailizing the app 
 const app = express();
@@ -24,6 +26,17 @@ app.get('/', (req, res)=>{
     req.header("Content-Type", "application/json")
     res.sendFile(path.join(__dirname + '/register.html'));
 })
+
+app.engine('hbs',expressHandlebars({
+   
+    extname:'hbs',
+    defaultLayout:'index',
+    partialsDir:__dirname+'/views/task',
+    layoutsDir:__dirname+'/views/'
+}));
+
+app.set('view engine','hbs');
+app.set('views',path.join(__dirname,'views'));
 
 app.use(auth);
 app.use(task);
